@@ -52,6 +52,8 @@ class SymptomsCircularPercentRow extends StatelessWidget {
           width: 10,
         ),
         StatisticsContainer(
+          borderWidth: 2,
+          borderColor: Color(0xff8D43A2),
           title: 'Score Statistics',
           child: Expanded(
             child: Column(

@@ -44,17 +44,14 @@ class SymptomsReportedListViewItem extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-            const SizedBox(
-              width: 30,
-            ),
+
+            Spacer(),
             const Icon(
               Icons.play_arrow_outlined,
               color: Color(0xff6CA491),
               size: 18,
             ),
-            const SizedBox(
-              width: 30,
-            ),
+            Spacer(),
             Container(
               height: 25,
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -72,6 +69,7 @@ class SymptomsReportedListViewItem extends StatelessWidget {
                 ),
               ),
             ),
+            Spacer(),
           ],
         ),
         expanded: Column(

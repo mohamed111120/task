@@ -19,7 +19,7 @@ class SymptomsDashboardRow extends StatelessWidget {
           ),
         ),
         Container(
-          height: 40,
+          height: 32,
           padding: const EdgeInsets.symmetric(
             horizontal: 10,
           ),

@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 
 class StatisticsContainer extends StatelessWidget {
-  const StatisticsContainer({super.key, required this.child, required this.title});
+  const StatisticsContainer({
+    super.key,
+    required this.child,
+    required this.title,
+    this.borderColor ,
+    this.borderWidth = 1,
+  });
 
   final Widget child;
   final String title;
+  final Color? borderColor;
+
+  final double? borderWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +23,10 @@ class StatisticsContainer extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.grey.withOpacity(.3)),
+          border: Border.all(
+            color: borderColor ?? Colors.grey.withOpacity(.3),
+            width: borderWidth ?? 1,
+          ),
         ),
         child: Column(
           children: [

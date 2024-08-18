@@ -9,19 +9,17 @@ class SymptomsReported extends StatelessWidget {
   Widget build(BuildContext context) {
     List controllers = List.generate(
       5,
-      (index) => ExpandableController(initialExpanded: false),
+      (index) => ExpandableController(initialExpanded: true),
     );
-    return Expanded(
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return SymptomsReportedListViewItem(
-            controller: controllers[index],
-          );
-        },
-      ),
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return SymptomsReportedListViewItem(
+          controller: controllers[index],
+        );
+      },
     );
   }
 }

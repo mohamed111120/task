@@ -20,6 +20,7 @@ class SymptomsTabBarViewWidget extends StatelessWidget {
           height: 20,
         ),
         ExpandablePanel(
+          controller:  ExpandableController(initialExpanded: true),
           theme: const ExpandableThemeData(
             expandIcon: Icons.arrow_drop_down,
             collapseIcon: Icons.arrow_drop_up,
@@ -54,11 +55,14 @@ class SymptomsTabBarViewWidget extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: 20),
         const Text(
           'Articles about how to improve your symptoms',
           style: TextStyle(
               color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
         ),
+        SizedBox(height: 20),
+
         SymptomsArticlesListView(),
         const SizedBox(height: 20),
         Container(
@@ -92,6 +96,7 @@ class SymptomsTabBarViewWidget extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: 20,)
       ],
     );
   }
