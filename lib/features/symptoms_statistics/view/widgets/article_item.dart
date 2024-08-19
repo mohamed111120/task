@@ -1,29 +1,34 @@
 import 'package:flutter/material.dart';
 
 class ArticleItem extends StatelessWidget {
-  const ArticleItem({super.key});
+  final String title;
+  const ArticleItem({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
+          height: 80,
+          width: 80,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.grey,
+            image: const DecorationImage(
+                fit: BoxFit.cover,
+                image: NetworkImage(
+                    "https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141353.jpg")),
           ),
-          height: 100,
-          width: 100,
         ),
+        const SizedBox(height: 4),
         SizedBox(
-          width: 100,
+          width: 80,
           child: Text(
-            'Improving Sleep',
+            title,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

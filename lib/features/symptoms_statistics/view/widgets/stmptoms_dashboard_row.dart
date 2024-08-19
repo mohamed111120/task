@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:task/features/symptoms_statistics/riverpod/symptoms_riverpod.dart';
 
 class SymptomsDashboardRow extends StatelessWidget {
   const SymptomsDashboardRow({super.key});
 
   @override
   Widget build(BuildContext context) {
-    String dropDownValue = 'week';
-
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(
           "Symptoms Dashboard",
           style: TextStyle(
-            color: Colors.black,
+            color: Color(0xff362b39),
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
@@ -25,25 +25,40 @@ class SymptomsDashboardRow extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: const Color(0xff8D43A2)),
+            border: Border.all(color: const Color(0xff9145a9)),
           ),
-          child: DropdownButton(
-            padding: EdgeInsets.zero,
-            value: dropDownValue,
-            underline: const SizedBox.shrink(),
-            items: [
-              const DropdownMenuItem(
-                child: Text(
-                  'week',
-                  style: TextStyle(color: Color(0xff8D43A2)),
-                ),
-                value: 'week',
-              ),
-              const DropdownMenuItem(child: Text('day'), value: 'day'),
-              const DropdownMenuItem(child: Text('Hour'), value: 'hour'),
-            ],
-            onChanged: (value) {
-              dropDownValue = value.toString();
+          child: Consumer(
+            builder: (_, WidgetRef ref, __) {
+              var provider = ref.watch(symptomsProvider);
+              return DropdownButton(
+                padding: EdgeInsets.zero,
+                value: provider.dropDownValue,
+                underline: const SizedBox.shrink(),
+                items: const [
+                  DropdownMenuItem(
+                    value: 'week',
+                    child: Text(
+                      'week',
+                      style: TextStyle(color: Color(0xff9145a9)),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                      value: 'day',
+                      child: Text(
+                        'day',
+                        style: TextStyle(color: Color(0xff9145a9)),
+                      )),
+                  DropdownMenuItem(
+                      value: 'hour',
+                      child: Text(
+                        'Hour',
+                        style: TextStyle(color: Color(0xff9145a9)),
+                      )),
+                ],
+                onChanged: (value) {
+                  provider.changeDropDownValue(value ?? "week");
+                },
+              );
             },
           ),
         )

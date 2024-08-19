@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:task/features/symptoms_statistics/riverpod/symptoms_riverpod.dart';
 import 'package:task/features/symptoms_statistics/view/widgets/symptoms_tabbar_view_widget.dart';
 
 class SymptomsView extends StatefulWidget {
@@ -22,63 +24,86 @@ class _SymptomsViewState extends State<SymptomsView>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: CustomScrollView(
-        shrinkWrap: true,
-        slivers: [
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: 20,
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: TabBar(
-                controller: tabController,
-                isScrollable: false,
-                indicatorColor: Colors.transparent,
-                dividerHeight: 0,
-                tabs: List.generate(
-                  2,
-                  (index) {
-                    return Tab(
-                      height: 50,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Color(0xff8D43A2),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Symptoms statistics",
-                            style: TextStyle(color: Colors.white),
+          backgroundColor: Colors.white,
+          body: Column(
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Consumer(
+                builder: (_, WidgetRef ref, __) {
+                  final provider = ref.watch(symptomsProvider);
+                  return TabBar(
+                      onTap: (value) {
+                        value == 0
+                            ? provider.changeIsSymptomsStatics(true)
+                            : provider.changeIsSymptomsStatics(false);
+                      },
+                      controller: tabController,
+                      isScrollable: false,
+                      indicatorColor: Colors.transparent,
+                      dividerHeight: 0,
+                      tabs: [
+                        Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: provider.isSymptomsStatics
+                                ? const Color(0xff9145a9)
+                                : const Color(0xffedf1f2),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Symptoms statistics",
+                              style: TextStyle(
+                                color: !provider.isSymptomsStatics
+                                    ? const Color(0xff48404b)
+                                    : const Color(0xfff7f8fa),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
-                )),
-          ),
-          SliverToBoxAdapter(
-            child: SizedBox(
-              height: 20,
-            ),
-          ),
-          SliverFillRemaining(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: TabBarView(
-                controller: tabController,
-                children: const [
-                  SingleChildScrollView(
-                      physics: NeverScrollableScrollPhysics(),
-                      child: SymptomsTabBarViewWidget()),
-                  Center(child: Text("details")),
-                ],
+                        Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: !(provider.isSymptomsStatics)
+                                ? const Color(0xff9145a9)
+                                : const Color(0xffedf1f2),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Symptoms Daily",
+                              style: TextStyle(
+                                color: provider.isSymptomsStatics
+                                    ? const Color(0xff48404b)
+                                    : const Color(0xfff7f8fa),
+                              ),
+                            ),
+                          ),
+                        )
+                      ]);
+                },
               ),
-            ),
-          ),
-        ],
-      )),
+              const SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TabBarView(
+                    controller: tabController,
+                    children: const [
+                      SingleChildScrollView(
+                          // physics: NeverScrollableScrollPhysics(),
+                          child: SymptomsTabBarViewWidget()),
+                      Center(child: Text("details")),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )),
     );
   }
 }
-

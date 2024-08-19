@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:task/features/symptoms_statistics/view/widgets/symptoms_reported.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:task/features/symptoms_statistics/riverpod/symptoms_riverpod.dart';
+import 'package:task/features/symptoms_statistics/view/widgets/symptoms_reported_list_view_item.dart';
 import 'package:task/features/symptoms_statistics/view/widgets/total_symptoms_row_item.dart';
 
 class SymptomsFrequencyAndServerity extends StatefulWidget {
@@ -24,136 +24,186 @@ class _SymptomsFrequencyAndServerityState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color:  Color(0xff6CA491).withOpacity(.1),
-      child: CustomScrollView(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        slivers: [
-          SliverToBoxAdapter(
-            child: TabBar(
-              controller: tabController,
-              isScrollable: false,
-              indicatorColor: Colors.transparent,
-              dividerHeight: 0,
-              tabs: List.generate(
-                2,
-                (index) {
-                  return Tab(
-                    height: 50,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: const Color(0xff6CA491),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          "Symptoms Reported",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  );
+    return Consumer(
+      builder: (_, WidgetRef ref, __) {
+        final provider = ref.watch(symptomsProvider);
+        return Column(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: () {
+                  provider.changeIsSymptomsReported(true);
                 },
-              ),
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 20,
-            ),
-          ),
-          SliverToBoxAdapter(
-            // ToDo: Error to Set Height
-            child: SizedBox(
-              height: 20000,
-              child: Expanded(
-                child: TabBarView(
-                  controller: tabController,
-                  children: const [
-                    SingleChildScrollView(
-                      physics: NeverScrollableScrollPhysics(),
-                      child: SymptomsReported(),
+                child: Container(
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: provider.isSymptomsReported
+                          ? const Color(0xff6CA491)
+                          : const Color(0xffc2c2c2),
                     ),
-                    SingleChildScrollView(
-                        child: Center(
-                          child: Text('data'),
-                        )
+                    borderRadius: BorderRadius.circular(10),
+                    color: provider.isSymptomsReported
+                        ? const Color(0xff6CA491)
+                        : Colors.white,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Symptoms Reported",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: provider.isSymptomsReported
+                              ? Colors.white
+                              : const Color(0xffc2c2c2)),
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+              InkWell(
+                onTap: () {
+                  provider.changeIsSymptomsReported(false);
+                },
+                child: Container(
+                  height: 40,
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: !provider.isSymptomsReported
+                          ? const Color(0xff6CA491)
+                          : const Color(0xffc2c2c2).withOpacity(.5),
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                    color: !provider.isSymptomsReported
+                        ? const Color(0xff6CA491)
+                        : Colors.white,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Triggers Reported",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: !provider.isSymptomsReported
+                              ? Colors.white
+                              : const Color(0xffc2c2c2)),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+          if (provider.isSymptomsReported)
+            Container(
+              color: const Color(0xfff3fcf9),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Total: 6 Symptoms 100%',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      width: 80,
-                      height: 30,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: const Color(0xff6CA491)),
-                      ),
-                      child: const Center(
-                        child: Text(
-                          'Legendo',
-                          style: TextStyle(
-                            color: Color(0xff6CA491),
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  const Row(
                     children: [
-                      TotalSymptomsRowItem(
-                        color: Color(0xff6CA491),
-                        text: 'the Same',
+                      Text(
+                        "Average frequency reported\nas percentage of all",
+                        style:
+                            TextStyle(fontSize: 12, color: Color(0xffa1a7a5)),
                       ),
-                      TotalSymptomsRowItem(
-                        color: Color(0xff6CA491),
-                        text: 'the Same',
+                      Spacer(),
+                      Text(
+                        "View all",
+                        style:
+                            TextStyle(fontSize: 12, color: Color(0xff8db6a8)),
                       ),
-                      TotalSymptomsRowItem(
-                        color: Color(0xff6CA491),
-                        text: 'the Same',
-                      ),
-                      TotalSymptomsRowItem(
-                        color: Color(0xff6CA491),
-                        text: 'the Same',
-                      ),
+                      Icon(Icons.arrow_drop_down, color: Color(0xff8db6a8))
                     ],
-                  )
+                  ),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  ...List.generate(
+                    provider.cartListItem.length,
+                    (index) => SymptomsReportedListViewItem(
+                      name: provider.cartListItem[index]['title'],
+                      percentage: provider.cartListItem[index]['percentage'],
+                      color: provider.cartListItem[index]['color'],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Total: 6 Symptoms 100%',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Container(
+                            width: 80,
+                            height: 30,
+                            margin: const EdgeInsets.symmetric(vertical: 2),
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: const Color(0xfffafffe),
+                              borderRadius: BorderRadius.circular(20),
+                              border:
+                                  Border.all(color: const Color(0xff6CA491)),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Legendo',
+                                style: TextStyle(
+                                  color: Color(0xff6CA491),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            TotalSymptomsRowItem(
+                              color: Color(0xffdbb828),
+                              text: 'the Same',
+                            ),
+                            TotalSymptomsRowItem(
+                              color: Color(0xffde9f6c),
+                              text: 'delecration',
+                            ),
+                            TotalSymptomsRowItem(
+                              color: Color(0xffa7b7d9),
+                              text: 'sign\nImportant',
+                            ),
+                            TotalSymptomsRowItem(
+                              color: Color(0xff68b498),
+                              text: 'sign\nImportant',
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-          ),
-
-
-        ],
-      ),
+          if (!provider.isSymptomsReported) ...[
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Triggers Reported'),
+            ),
+          ],
+        ]);
+      },
     );
   }
 }

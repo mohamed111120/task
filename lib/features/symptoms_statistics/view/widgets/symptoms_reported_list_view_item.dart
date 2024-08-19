@@ -3,9 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:task/features/symptoms_statistics/view/widgets/range_widget.dart';
 
 class SymptomsReportedListViewItem extends StatelessWidget {
-  const SymptomsReportedListViewItem({super.key, required this.controller});
+  final String name;
+  final String percentage;
+  final Color color;
 
-  final ExpandableController controller;
+  SymptomsReportedListViewItem({
+    super.key,
+    required this.name,
+    required this.percentage,
+    required this.color,
+  });
+
+  final ExpandableController expandableController =
+      ExpandableController(initialExpanded: true);
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +30,13 @@ class SymptomsReportedListViewItem extends StatelessWidget {
         ),
       ),
       child: ExpandablePanel(
-        controller: controller,
+        controller: expandableController,
         theme: const ExpandableThemeData(
-          expandIcon: Icons.arrow_drop_down,
-          collapseIcon: Icons.arrow_drop_up,
-          iconColor: Color(0xff6CA491),
-          iconSize: 24,
-        ),
+            expandIcon: Icons.arrow_drop_down,
+            collapseIcon: Icons.arrow_drop_up,
+            iconColor: Color(0xff6CA491),
+            iconSize: 24,
+            iconPadding: EdgeInsets.all(0)),
         header: Row(
           children: [
             const Icon(
@@ -36,16 +46,16 @@ class SymptomsReportedListViewItem extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            const Text(
-              'HotFlashes',
-              style: TextStyle(
+            Text(
+              name,
+              style: const TextStyle(
                 decoration: TextDecoration.underline,
                 color: Colors.black,
                 fontSize: 16,
               ),
             ),
             const SizedBox(
-              width: 30,
+              width: 2,
             ),
             const Icon(
               Icons.play_arrow_outlined,
@@ -57,15 +67,26 @@ class SymptomsReportedListViewItem extends StatelessWidget {
             ),
             Container(
               height: 25,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
+                borderRadius: BorderRadius.circular(4),
+                gradient: LinearGradient(
+                    begin: Alignment.bottomRight,
+                    end: Alignment.topLeft,
+                    colors: [
+                      color,
+                      color,
+                      color.withOpacity(.8),
+                      color.withOpacity(.8),
+                      color,
+                      color
+                    ]),
                 color: const Color(0xff6CA491),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  '50%',
-                  style: TextStyle(
+                  percentage,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
@@ -81,16 +102,16 @@ class SymptomsReportedListViewItem extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(
-                4,
+                rowListItem.length,
                 (index) => RangeWidget(
-                  text: 'low',
-                  color: Colors.red,
+                  text: rowListItem[index]['title'],
+                  color: rowListItem[index]['color'],
                   num: index + 1,
                 ),
               ),
             ),
-            SizedBox(
-              height: 15,
+            const SizedBox(
+              height: 14,
             ),
             Row(
               children: [
@@ -107,17 +128,25 @@ class SymptomsReportedListViewItem extends StatelessWidget {
                     child: Text(
                       '1',
                       style: TextStyle(
+                        fontSize: 10,
                         color: Color(0xff6CA491),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
-                const Text('Number of Times Reported'),
+                const SizedBox(width: 10),
+                const Text(
+                  'Number of Times Reported',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xffa8a9a1),
+                  ),
+                ),
                 const SizedBox(width: 20),
                 const Icon(
                   Icons.error_outline,
-                  color: Color(0xff6CA491),
+                  size: 18,
+                  color: Color(0xffccd5d2),
                 ),
               ],
             ),
@@ -127,4 +156,11 @@ class SymptomsReportedListViewItem extends StatelessWidget {
       ),
     );
   }
+
+  final List rowListItem = [
+    {"title": "Low", "color": const Color(0xff67bba1)},
+    {"title": "Moderate", "color": const Color(0xfff4e059)},
+    {"title": "High", "color": const Color(0xfff09b87)},
+    {"title": "Extreme", "color": const Color(0xffd6413d)},
+  ];
 }

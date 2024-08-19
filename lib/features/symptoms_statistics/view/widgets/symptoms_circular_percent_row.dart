@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:task/features/symptoms_statistics/view/widgets/line_chart.dart';
 import 'package:task/features/symptoms_statistics/view/widgets/statistics_container.dart';
 
 class SymptomsCircularPercentRow extends StatelessWidget {
@@ -14,13 +15,15 @@ class SymptomsCircularPercentRow extends StatelessWidget {
           child: Expanded(
             child: Column(
               children: [
-                Spacer(),
+                const SizedBox(
+                  height: 14,
+                ),
                 CircularPercentIndicator(
-                  radius: 46,
+                  radius: 36,
                   lineWidth: 6,
                   percent: 0.8,
-                  progressColor: const Color(0xff8D43A2),
-                  backgroundColor: const Color(0xff8D43A2).withOpacity(.2),
+                  progressColor: const Color(0xffaa4662),
+                  backgroundColor: const Color(0xffaa4662).withOpacity(.2),
                   circularStrokeCap: CircularStrokeCap.round,
                   center: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +32,7 @@ class SymptomsCircularPercentRow extends StatelessWidget {
                         '80/100',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -37,7 +40,7 @@ class SymptomsCircularPercentRow extends StatelessWidget {
                         'Severe',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 12,
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -48,19 +51,22 @@ class SymptomsCircularPercentRow extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         StatisticsContainer(
+          isGreyBorder: false,
           title: 'Score Statistics',
-          child: Expanded(
+          child: const Expanded(
             child: Column(
               children: [
-                Text(
-                  'Statistics photo',
-                  style: TextStyle(color: Colors.black),
+                SizedBox(
+                  height: 20,
                 ),
-                Spacer(),
+                LineChartSample2(),
+                SizedBox(
+                  height: 10,
+                ),
                 Text(
                   '7 Days',
                   style: TextStyle(
@@ -74,7 +80,7 @@ class SymptomsCircularPercentRow extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         StatisticsContainer(
@@ -82,13 +88,15 @@ class SymptomsCircularPercentRow extends StatelessWidget {
           child: Expanded(
             child: Column(
               children: [
-                Spacer(),
+                const SizedBox(
+                  height: 14,
+                ),
                 CircularPercentIndicator(
-                  radius: 46,
+                  radius: 36,
                   lineWidth: 6,
                   percent: 0.8,
-                  progressColor: const Color(0xff8D43A2),
-                  backgroundColor: const Color(0xff8D43A2).withOpacity(.2),
+                  progressColor: const Color(0xfff27d47),
+                  backgroundColor: const Color(0xfff27d47).withOpacity(.2),
                   circularStrokeCap: CircularStrokeCap.round,
                   center: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -97,7 +105,7 @@ class SymptomsCircularPercentRow extends StatelessWidget {
                         '65/100',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 20,
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -105,7 +113,7 @@ class SymptomsCircularPercentRow extends StatelessWidget {
                         'Moderate',
                         style: TextStyle(
                           color: Colors.black,
-                          fontSize: 12,
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

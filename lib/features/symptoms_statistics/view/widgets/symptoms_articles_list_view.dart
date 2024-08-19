@@ -3,9 +3,16 @@ import 'package:flutter/material.dart';
 import 'article_item.dart';
 
 class SymptomsArticlesListView extends StatelessWidget {
-  const SymptomsArticlesListView({
+  SymptomsArticlesListView({
     super.key,
   });
+
+  final List<String> titles = [
+    "improving sleep",
+    "reducing",
+    "spicy food",
+    "reducing",
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +24,7 @@ class SymptomsArticlesListView extends StatelessWidget {
         itemBuilder: (context, index) {
           return Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: const ArticleItem(),
+            child: ArticleItem(title: titles[index]),
           );
         },
       ),
