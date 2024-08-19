@@ -25,7 +25,10 @@ class ImproveYourSymptomsContainer extends StatelessWidget {
               width: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color(0xff6CA491),
+                image: DecorationImage(
+                  image: NetworkImage(model.image),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Text(

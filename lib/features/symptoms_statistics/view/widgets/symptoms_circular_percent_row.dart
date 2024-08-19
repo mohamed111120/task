@@ -1,6 +1,10 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:task/features/symptoms_statistics/view/widgets/statistics_container.dart';
+
+import '../../../../main.dart';
+import 'chartt.dart';
 
 class SymptomsCircularPercentRow extends StatelessWidget {
   const SymptomsCircularPercentRow({super.key});
@@ -26,7 +30,7 @@ class SymptomsCircularPercentRow extends StatelessWidget {
                     '80/100',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize:16,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -51,9 +55,10 @@ class SymptomsCircularPercentRow extends StatelessWidget {
             title: 'Score Statistics',
             child: Column(
               children: [
-                Text(
-                  'Statistics photo',
-                  style: TextStyle(color: Colors.black),
+                SizedBox(
+                  height: 80,
+                  width: double.infinity,
+                  child: Chart()
                 ),
                 Text(
                   '7 Days',

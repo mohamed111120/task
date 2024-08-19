@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../model/article_model.dart';
 import 'article_item.dart';
 
 class SymptomsArticlesListView extends StatelessWidget {
@@ -13,11 +14,13 @@ class SymptomsArticlesListView extends StatelessWidget {
       height: 150,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: 4,
+        itemCount: articleList.length,
         itemBuilder: (context, index) {
-          return Padding(
+          return  Padding(
             padding: const EdgeInsets.only(right: 8.0),
-            child: const ArticleItem(),
+            child: ArticleItem(
+              articleModel: articleList[index],
+            ),
           );
         },
       ),

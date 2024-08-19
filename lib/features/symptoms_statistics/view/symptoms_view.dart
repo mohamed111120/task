@@ -8,6 +8,7 @@ class SymptomsView extends StatefulWidget {
   @override
   State<SymptomsView> createState() => _SymptomsViewState();
 }
+
 int index = 0;
 
 class _SymptomsViewState extends State<SymptomsView> {
@@ -59,19 +60,17 @@ class _SymptomsViewState extends State<SymptomsView> {
                     activeButtonRadius: 10,
                     // you can control the radius for the active button
                     onChange: (int currentIndex, int targetIndex) {
-                      print('currentIndex: $currentIndex, targetIndex: $targetIndex');
+                      print(
+                          'currentIndex: $currentIndex, targetIndex: $targetIndex');
                       index = currentIndex;
                       setState(() {});
                     },
                     showActiveButtonColor: true,
-
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  index == 0
-                      ? const SymptomsTabBarViewWidget()
-                      : Container(),
+                  index == 0 ? const SymptomsTabBarViewWidget() : Container(),
                 ],
               ),
             ),
