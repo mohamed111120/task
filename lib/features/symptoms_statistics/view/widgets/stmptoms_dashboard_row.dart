@@ -7,7 +7,7 @@ class SymptomsDashboardRow extends StatelessWidget {
   Widget build(BuildContext context) {
     String dropDownValue = 'week';
 
-    return  Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(
@@ -28,6 +28,10 @@ class SymptomsDashboardRow extends StatelessWidget {
             border: Border.all(color: const Color(0xff8D43A2)),
           ),
           child: DropdownButton(
+            icon: Icon(
+              Icons.keyboard_arrow_down_outlined,
+              color: const Color(0xff8D43A2),
+            ),
             padding: EdgeInsets.zero,
             value: dropDownValue,
             underline: const SizedBox.shrink(),

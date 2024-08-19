@@ -16,8 +16,13 @@ class RangeWidget extends StatelessWidget {
       children: [
         Text(
           text,
+          style:  TextStyle(
+            color: color,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
         ),
-        const SizedBox(width: 2),
+        const SizedBox(width: 5),
         Container(
           height: 20,
           width: 20,

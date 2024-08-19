@@ -1,12 +1,16 @@
+
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:task/features/symptoms_statistics/model/range_model.dart';
 import 'package:task/features/symptoms_statistics/view/widgets/range_widget.dart';
 
+import '../../model/symptoms_reported_list_view_item_model.dart';
+
 class SymptomsReportedListViewItem extends StatelessWidget {
-  const SymptomsReportedListViewItem({super.key, required this.controller});
+  const SymptomsReportedListViewItem({super.key, required this.controller, required this.model});
 
   final ExpandableController controller;
-
+  final SymptomsReportedListViewItemModel model ;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,9 +27,10 @@ class SymptomsReportedListViewItem extends StatelessWidget {
         controller: controller,
         theme: const ExpandableThemeData(
           expandIcon: Icons.arrow_drop_down,
-          collapseIcon: Icons.arrow_drop_up,
+          collapseIcon: Icons.arrow_drop_down,
           iconColor: Color(0xff6CA491),
           iconSize: 24,
+          iconPadding: EdgeInsets.only(bottom: 10, right: 5),
         ),
         header: Row(
           children: [
@@ -36,58 +41,78 @@ class SymptomsReportedListViewItem extends StatelessWidget {
             const SizedBox(
               width: 5,
             ),
-            const Text(
-              'HotFlashes',
-              style: TextStyle(
+             Text(
+              model.text,
+              style: const TextStyle(
                 decoration: TextDecoration.underline,
                 color: Colors.black,
+                fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
             ),
-
-            Spacer(),
+            const Spacer(),
             const Icon(
               Icons.play_arrow_outlined,
               color: Color(0xff6CA491),
               size: 18,
             ),
-            Spacer(),
+            const Spacer(),
             Container(
               height: 25,
-              padding: const EdgeInsets.symmetric(horizontal: 20),
+              width: model.width.toDouble() ,
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    model.color,
+                    model.color.withOpacity(.8),
+                    model.color.withOpacity(.7),
+                    model.color.withOpacity(.6),
+                    model.color.withOpacity(.5),
+                  ],
+                ),
                 borderRadius: BorderRadius.circular(5),
-                color: const Color(0xff6CA491),
+                color: model.color,
               ),
-              child: const Center(
+              child:  Center(
                 child: Text(
-                  '50%',
-                  style: TextStyle(
+                  model.value,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
         expanded: Column(
           children: [
-            const Text('Symptoms Frequency and Serverity'),
+            const SizedBox(height: 10),
+            const Text(
+              'Symptoms Frequency and Serverity',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(
-                4,
-                (index) => RangeWidget(
-                  text: 'low',
-                  color: Colors.red,
-                  num: index + 1,
+                ranges.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.symmetric( horizontal: 2),
+                  child: RangeWidget(
+                    text: ranges[index].text,
+                    color: ranges[index].color,
+                    num: ranges[index].num,
+                  ),
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Row(
@@ -110,12 +135,19 @@ class SymptomsReportedListViewItem extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
-                const Text('Number of Times Reported'),
+                const SizedBox(width: 10),
+                const Text('Number of Times Reported',
+                    style: TextStyle(
+                      color: Colors.black38,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                ),
                 const SizedBox(width: 20),
-                const Icon(
+                 Icon(
                   Icons.error_outline,
-                  color: Color(0xff6CA491),
+                  color: const Color(0xff6CA491).withOpacity(.5),
+                  size:  18,
                 ),
               ],
             ),

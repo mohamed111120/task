@@ -2,9 +2,15 @@ import 'package:animated_toggle/animated_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:task/features/symptoms_statistics/view/widgets/symptoms_tabbar_view_widget.dart';
 
-class SymptomsView extends StatelessWidget {
+class SymptomsView extends StatefulWidget {
   const SymptomsView({super.key});
 
+  @override
+  State<SymptomsView> createState() => _SymptomsViewState();
+}
+int index = 0;
+
+class _SymptomsViewState extends State<SymptomsView> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,7 +38,7 @@ class SymptomsView extends StatelessWidget {
                     initialIndex: 0,
                     background: Colors.white,
                     activeColor: Colors.deepPurple,
-                    inActiveColor: Colors.grey.shade200,
+                    inActiveColor: Colors.grey.shade100,
                     inActiveButtonRadius: 10,
                     activeTextStyle: const TextStyle(
                         fontSize: 14,
@@ -53,15 +59,19 @@ class SymptomsView extends StatelessWidget {
                     activeButtonRadius: 10,
                     // you can control the radius for the active button
                     onChange: (int currentIndex, int targetIndex) {
-                      // write Your Personal Code Here
+                      print('currentIndex: $currentIndex, targetIndex: $targetIndex');
+                      index = currentIndex;
+                      setState(() {});
                     },
                     showActiveButtonColor: true,
-                    // 'en' mean make the start from left other mean start from right
+
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  SymptomsTabBarViewWidget(),
+                  index == 0
+                      ? const SymptomsTabBarViewWidget()
+                      : Container(),
                 ],
               ),
             ),
